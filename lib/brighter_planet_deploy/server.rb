@@ -33,38 +33,49 @@ module BrighterPlanet
         @hostname || local_hostname
       end
       
+      attr_writer :public_dir
       def public_dir
-        ::File.join rails_root, 'public'
+        @public_dir || ::File.join(rails_root, 'public')
       end
       
+      attr_writer :private_dir
       def private_dir
-        ::File.join rails_root, 'config'
+        @private_dir || ::File.join(rails_root, 'config')
       end
       
+      attr_writer :gender
       def gender
-        from_public_dir(:gender).to_sym
+        @gender || from_public_dir(:gender).to_sym
       end
       
+      attr_writer :phase
       def phase
-        from_public_dir(:phase).to_sym
+        @phase || from_public_dir(:phase).to_sym
+      end
+      
+      attr_writer :service
+      def service
+        @service || from_public_dir(:service).to_sym
       end
             
-      def service
-        case from_public_dir(:service).to_sym
-        when :cm1, :EmissionEstimateService
-          EmissionEstimateService.instance
-        end
-      end
-      
+      attr_writer :resque_redis_url
       def resque_redis_url
-        from_private :resque_redis_url
+        @resque_redis_url || from_private(:resque_redis_url)
       end
       
+      attr_writer :status
       def status
-        if gender == service.gender
+        @status || if gender == service_class.gender
           :active
         else
           :standby
+        end
+      end
+      
+      def service_class
+        case service
+        when :EmissionEstimateService, :cm1
+          EmissionEstimateService.instance
         end
       end
       

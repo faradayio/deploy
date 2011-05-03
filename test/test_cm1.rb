@@ -34,7 +34,7 @@ class TestCm1 < Test::Unit::TestCase
     
   def test_003_service
     assert_equal 'EmissionEstimateService', BrighterPlanet.deploy.emission_estimate_service.name
-    assert_equal 'EmissionEstimateService', @me.service.name
+    assert_equal 'EmissionEstimateService', @me.service_class.name
   end
   
   def test_004_status
