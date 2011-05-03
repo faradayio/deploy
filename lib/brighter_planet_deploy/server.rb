@@ -2,6 +2,9 @@ module BrighterPlanet
   class Deploy
     class Server
       include ReadsFromLocalFilesystem
+
+      class InvalidKey < ::ArgumentError;
+      end
       
       class << self
         def me
@@ -23,16 +26,17 @@ module BrighterPlanet
         !!@local
       end
       
-      attr_writer :rails_root
-      def rails_root
-        @rails_root || lookup(:rails_root) || local_rails_root
-      end
-      
       attr_writer :hostname
       def hostname
         @hostname || lookup(:hostname) || local_hostname
       end
       
+      # can't be saved
+      attr_writer :rails_root
+      def rails_root
+        @rails_root || local_rails_root
+      end
+            
       # can't be saved
       attr_writer :public_dir
       def public_dir
@@ -83,12 +87,9 @@ module BrighterPlanet
       end
       
       PUBLIC = [:gender]
-      PRIVATE = [:resque_redis_url, :rails_root, :environment, :hostname, :phase, :service, :status]
-      ALWAYS_SYMBOLIZE = PUBLIC + PRIVATE - [:rails_root, :resque_redis_url]
-      
-      class InvalidKey < ::ArgumentError;
-      end
-      
+      PRIVATE = [:resque_redis_url, :environment, :hostname, :phase, :service, :status]
+      ALWAYS_SYMBOLIZE = PUBLIC + PRIVATE - [:resque_redis_url]
+            
       private
       
       def lookup(id)
