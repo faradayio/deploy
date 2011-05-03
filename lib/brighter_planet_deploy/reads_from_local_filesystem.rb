@@ -1,3 +1,4 @@
+require 'fileutils'
 module BrighterPlanet
   class Deploy
     module ReadsFromLocalFilesystem
@@ -7,8 +8,8 @@ module BrighterPlanet
       class NotFound < ::RuntimeError;
       end
             
-      def from_etc(id)
-        from_file etc_brighter_planet_deploy_path(id)
+      def from_private(id)
+        from_file private_brighter_planet_deploy_path(id)
       end
       
       def from_public_dir(id)
@@ -16,7 +17,7 @@ module BrighterPlanet
       end
       
       def write_config(config = {})
-        [ :public, :etc ].each do |loc|
+        [ :public, :private ].each do |loc|
           config[loc].each do |k, v|
             path = send("#{loc}_brighter_planet_deploy_path", k)
             $stderr.puts "[brighter_planet_deploy] Writing #{k}=#{v} to #{path}"
@@ -29,11 +30,15 @@ module BrighterPlanet
       private
 
       def public_brighter_planet_deploy_path(id)
-        ::File.join public_dir, 'brighter_planet_deploy', id
+        dir = ::File.join public_dir, 'brighter_planet_deploy', id
+        ::FileUtils.mkdir_p dir unless ::File.directory? dir
+        dir
       end
       
-      def etc_brighter_planet_deploy_path(id)
-        ::File.join '/etc/brighter_planet_deploy', id
+      def private_brighter_planet_deploy_path(id)
+        dir = ::File.join private_dir, 'brighter_planet_deploy', id
+        ::FileUtils.mkdir_p dir unless ::File.directory? dir
+        dir
       end
       
       # fills placeholders like [STATUS] by sending :status

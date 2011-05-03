@@ -1,12 +1,5 @@
 require 'singleton'
 require 'eat'
-require 'active_support'
-require 'active_support/version'
-%w{
-  active_support/core_ext/object
-}.each do |active_support_3_requirement|
-  require active_support_3_requirement
-end if ::ActiveSupport::VERSION::MAJOR >= 3
 
 module BrighterPlanet
   def self.deploy
@@ -28,7 +21,7 @@ module BrighterPlanet
     end
     
     def emission_estimate_service
-      EmissionEstimateService.app_master
+      EmissionEstimateService.instance
     end
   end
 end

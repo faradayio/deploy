@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "brighter_planet_deploy"
   s.version     = BrighterPlanet::Deploy::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Seamus Abshere", "Andy Rossmeissl"]
+  s.email       = ["seamus@abshere.net"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Brighter Planet deployment system, published as the gem brighter_planet_deploy}
+  s.description = %q{Brighter Planet deployment system, published as the gem brighter_planet_deploy. Internal use.}
 
   s.rubyforge_project = "brighter_planet_deploy"
 
@@ -22,7 +22,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit'
   s.add_development_dependency 'fakeweb'
   s.add_development_dependency 'fakefs'
-  s.add_dependency 'activesupport', '>= 2.3.11'
-  s.add_dependency 'i18n' # for activesupport
   s.add_dependency 'eat'
 end
