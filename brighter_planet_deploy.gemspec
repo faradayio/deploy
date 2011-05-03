@@ -18,4 +18,11 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+  
+  s.add_development_dependency 'test-unit'
+  s.add_development_dependency 'fakeweb'
+  s.add_development_dependency 'fakefs'
+  s.add_dependency 'activesupport', '>= 2.3.11'
+  s.add_dependency 'i18n' # for activesupport
+  s.add_dependency 'eat'
 end
