@@ -55,4 +55,10 @@ class TestCm1 < Test::Unit::TestCase
       BrighterPlanet.deploy.servers.me.gender
     end
   end
+  
+  # not sure this should be included
+  def test_008_phase
+    flunk
+    assert_equal :edge, BrighterPlanet.deploy.servers.me.phase
+  end
 end
