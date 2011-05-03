@@ -70,7 +70,7 @@ module BrighterPlanet
       
       attr_writer :status
       def status
-        if gender == service_class.gender
+        @status || if gender == service_class.gender
           :active
         else
           :standby
