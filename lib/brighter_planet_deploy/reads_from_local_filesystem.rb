@@ -46,13 +46,13 @@ module BrighterPlanet
       private
 
       def public_brighter_planet_deploy_path(id)
-        dir = ::File.join public_dir, 'brighter_planet_deploy', id
+        dir = ::File.join public_dir, 'brighter_planet_deploy', id.to_s
         ::FileUtils.mkdir_p dir unless ::File.directory? dir
         dir
       end
       
       def private_brighter_planet_deploy_path(id)
-        dir = ::File.join private_dir, 'brighter_planet_deploy', id
+        dir = ::File.join private_dir, 'brighter_planet_deploy', id.to_s
         ::FileUtils.mkdir_p dir unless ::File.directory? dir
         dir
       end
