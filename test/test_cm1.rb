@@ -51,6 +51,16 @@ class TestCm1 < Test::Unit::TestCase
     assert_equal :'-bar-', @me.gender
     assert_equal 'foo-bar-baz', @me.resque_redis_url
   end
+  
+  def test_007_save_config
+    @me.gender = :'-zzz-'
+    @me.resque_redis_url = 'fie[GENDER]bang'
+    @me.save_config
+    me2 = BrighterPlanet.deploy.servers.me
+    me2.rails_root = '/data/randomeyappname/current'
+    assert_equal :'-zzz-', me2.gender
+    assert_equal 'fie-zzz-bang', me2.resque_redis_url
+  end
     
   # not sure this should be included
   def test_008_phase

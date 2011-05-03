@@ -8,7 +8,7 @@ module BrighterPlanet
       class NotFound < ::RuntimeError;
       end
             
-      def from_private(id)
+      def from_private_dir(id)
         from_file private_brighter_planet_deploy_path(id)
       end
       
@@ -26,7 +26,23 @@ module BrighterPlanet
           end
         end
       end
-
+      
+      def save_config
+        public = self.class.const_get(:PUBLIC).inject({}) do |memo, k|
+          if v = instance_variable_get("@#{k}")
+            memo[k] = v
+          end
+          memo
+        end
+        private = self.class.const_get(:PRIVATE).inject({}) do |memo, k|
+          if v = instance_variable_get("@#{k}")
+            memo[k] = v
+          end
+          memo
+        end
+        write_config :public => public, :private => private
+      end
+      
       private
 
       def public_brighter_planet_deploy_path(id)
