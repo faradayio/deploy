@@ -25,19 +25,21 @@ module BrighterPlanet
       
       attr_writer :rails_root
       def rails_root
-        @rails_root || local_rails_root
+        @rails_root || lookup(:rails_root) || local_rails_root
       end
       
       attr_writer :hostname
       def hostname
-        @hostname || local_hostname
+        @hostname || lookup(:hostname) || local_hostname
       end
       
+      # can't be saved
       attr_writer :public_dir
       def public_dir
         @public_dir || ::File.join(rails_root, 'public')
       end
       
+      # can't be saved
       attr_writer :private_dir
       def private_dir
         @private_dir || ::File.join(rails_root, 'config')
@@ -55,7 +57,7 @@ module BrighterPlanet
       
       attr_writer :environment
       def environment
-        @environment || local_rails_environment
+        @environment || lookup(:environment) || local_rails_environment
       end
       
       attr_writer :service
@@ -70,11 +72,7 @@ module BrighterPlanet
       
       attr_writer :status
       def status
-        @status || if gender == service_class.gender
-          :active
-        else
-          :standby
-        end
+        @status || lookup(:status) || (gender == service_class.gender ? :active : :standby)
       end
       
       def service_class
@@ -84,9 +82,9 @@ module BrighterPlanet
         end
       end
       
-      PUBLIC = [:gender, :phase, :service]
-      PRIVATE = [:resque_redis_url]
-      ALWAYS_SYMBOLIZE = [:gender, :phase, :service]
+      PUBLIC = [:gender]
+      PRIVATE = [:resque_redis_url, :rails_root, :environment, :hostname, :phase, :service, :status]
+      ALWAYS_SYMBOLIZE = PUBLIC + PRIVATE - [:rails_root, :resque_redis_url]
       
       class InvalidKey < ::ArgumentError;
       end
@@ -102,7 +100,7 @@ module BrighterPlanet
         else
           raise InvalidKey, "[brighter_planet_deploy] Unknown key #{id}"
         end
-        ALWAYS_SYMBOLIZE.include?(id) ? str.to_sym : str
+        (str and ALWAYS_SYMBOLIZE.include?(id)) ? str.to_sym : str
       end
       
       def local_hostname

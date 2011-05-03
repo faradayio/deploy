@@ -10,12 +10,14 @@ class TestCm1 < Test::Unit::TestCase
       FakeWeb.register_uri :get, url, :status => ["200", "OK"], :body => body
     end
     FakeFS.activate!
+
     FileUtils.mkdir_p '/data/randomeyappname/current/config/brighter_planet_deploy'
     File.open('/data/randomeyappname/current/config/brighter_planet_deploy/resque_redis_url', 'w') { |f| f.write "redis://username:password@hostname.redistogo.com:9000/[STATUS]:resque" }
+    File.open('/data/randomeyappname/current/config/brighter_planet_deploy/phase', 'w') { |f| f.write 'edge' }
+    File.open('/data/randomeyappname/current/config/brighter_planet_deploy/service', 'w') { |f| f.write 'cm1' }
+    
     FileUtils.mkdir_p '/data/randomeyappname/current/public/brighter_planet_deploy'
-    File.open('/data/randomeyappname/current/public/brighter_planet_deploy/service', 'w') { |f| f.write 'cm1' }
     File.open('/data/randomeyappname/current/public/brighter_planet_deploy/gender', 'w') { |f| f.write 'girl' }
-    File.open('/data/randomeyappname/current/public/brighter_planet_deploy/phase', 'w') { |f| f.write 'edge' }
     
     @me = BrighterPlanet.deploy.servers.me
     @me.rails_root = '/data/randomeyappname/current'
