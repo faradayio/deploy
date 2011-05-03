@@ -21,7 +21,6 @@ module BrighterPlanet
           config[loc].each do |k, v|
             path = send("#{loc}_brighter_planet_deploy_path", k)
             $stderr.puts "[brighter_planet_deploy] Writing #{k}=#{v} to #{path}"
-            ::FileUtils.mkdir_p ::File.dirname(path)
             ::File.open(path, 'w') { |f| f.write v.to_s }
           end
         end
@@ -46,15 +45,15 @@ module BrighterPlanet
       private
 
       def public_brighter_planet_deploy_path(id)
-        dir = ::File.join public_dir, 'brighter_planet_deploy', id.to_s
-        ::FileUtils.mkdir_p dir unless ::File.directory? dir
-        dir
+        p = ::File.join public_dir, 'brighter_planet_deploy', id.to_s
+        ::FileUtils.mkdir_p ::File.dirname(p)
+        p
       end
       
       def private_brighter_planet_deploy_path(id)
-        dir = ::File.join private_dir, 'brighter_planet_deploy', id.to_s
-        ::FileUtils.mkdir_p dir unless ::File.directory? dir
-        dir
+        p = ::File.join private_dir, 'brighter_planet_deploy', id.to_s
+        ::FileUtils.mkdir_p ::File.dirname(p)
+        p
       end
       
       # fills placeholders like [STATUS] by sending :status
