@@ -42,4 +42,17 @@ class TestCm1 < Test::Unit::TestCase
     assert BrighterPlanet.deploy.servers.me.resque_redis_url.start_with?('redis://')
     assert BrighterPlanet.deploy.servers.me.resque_redis_url.include?('active')
   end
+  
+  def test_006_write_config
+    BrighterPlanet.deploy.servers.me.write_config :public => { :gender => 'boy' }, :etc => { :resque_redis_url => 'foobar' }
+    assert_equal :boy, BrighterPlanet.deploy.servers.me.gender
+    assert_equal 'foobar', BrighterPlanet.deploy.servers.me.resque_redis_url
+  end
+  
+  def test_007_check_config
+    FileUtils.rm_f '/etc/brighter_planet_deploy/public_dir'
+    assert_raises(BrighterPlanet::Deploy::ReadsFromLocalFilesystem::NotFound) do
+      BrighterPlanet.deploy.servers.me.gender
+    end
+  end
 end

@@ -27,7 +27,11 @@ module BrighterPlanet
       def local?
         !!@local
       end
-            
+      
+      def public_dir
+        from_etc :public_dir
+      end
+      
       def gender
         from_public_dir(:gender).to_sym
       end

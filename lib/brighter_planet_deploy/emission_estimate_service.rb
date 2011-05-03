@@ -17,6 +17,7 @@ module BrighterPlanet
       end
       
       delegate :local?, :to => :server
+      delegate :public_dir, :to => :server
       
       def endpoint
         'http://carbon.brighterplanet.com'
@@ -39,7 +40,7 @@ module BrighterPlanet
       end
       
       def resque_redis_url
-        from_etc :resque_redis_url, :status => status
+        from_etc :resque_redis_url
       end
     end
   end
