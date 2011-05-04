@@ -5,7 +5,7 @@ class TestCm1 < Test::Unit::TestCase
     FakeWeb.clean_registry
     FakeWeb.allow_net_connect = false
     {
-      'http://carbon.brighterplanet.com/brighter_planet_deploy/gender' => 'girl',
+      'http://carbon.brighterplanet.com/brighter_planet_deploy/color' => 'blue',
     }.each do |url, body|
       FakeWeb.register_uri :get, url, :status => ["200", "OK"], :body => body
     end
@@ -17,7 +17,7 @@ class TestCm1 < Test::Unit::TestCase
     File.open('/data/randomeyappname/current/config/brighter_planet_deploy/service', 'w') { |f| f.write 'cm1' }
     
     FileUtils.mkdir_p '/data/randomeyappname/current/public/brighter_planet_deploy'
-    File.open('/data/randomeyappname/current/public/brighter_planet_deploy/gender', 'w') { |f| f.write 'girl' }
+    File.open('/data/randomeyappname/current/public/brighter_planet_deploy/color', 'w') { |f| f.write 'blue' }
     
     @me = BrighterPlanet.deploy.servers.me
     @me.rails_root = '/data/randomeyappname/current'
@@ -29,9 +29,9 @@ class TestCm1 < Test::Unit::TestCase
     FakeFS.deactivate!
   end
   
-  def test_001_gender
-    assert_equal 'girl', @me.gender
-    assert_equal 'girl', BrighterPlanet.deploy.emission_estimate_service.gender
+  def test_001_color
+    assert_equal 'blue', @me.color
+    assert_equal 'blue', BrighterPlanet.deploy.emission_estimate_service.color
   end
     
   def test_003_service
@@ -49,18 +49,18 @@ class TestCm1 < Test::Unit::TestCase
   end
   
   def test_006_write_config
-    @me.write_config :public => { :gender => '-bar-' }, :private => { :resque_redis_url => 'foo[GENDER]baz' }
-    assert_equal '-bar-', @me.gender
+    @me.write_config :public => { :color => '-bar-' }, :private => { :resque_redis_url => 'foo[COLOR]baz' }
+    assert_equal '-bar-', @me.color
     assert_equal 'foo-bar-baz', @me.resque_redis_url
   end
   
   def test_007_save_config
-    @me.gender = '-zzz-'
-    @me.resque_redis_url = 'fie[GENDER]bang'
+    @me.color = '-zzz-'
+    @me.resque_redis_url = 'fie[COLOR]bang'
     @me.save_config
     me2 = BrighterPlanet.deploy.servers.me
     me2.rails_root = '/data/randomeyappname/current'
-    assert_equal '-zzz-', me2.gender
+    assert_equal '-zzz-', me2.color
     assert_equal 'fie-zzz-bang', me2.resque_redis_url
   end
     

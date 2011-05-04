@@ -7,9 +7,9 @@ module BrighterPlanet
       end
       
       # keys that are published
-      PUBLIC = [:gender]
+      PUBLIC = [:color]
       # keys that are not saved
-      NOT_SAVED = [:local, :rails_root, :public_dir, :private_dir]
+      NOT_SAVED = [:local, :status, :rails_root, :public_dir, :private_dir]
 
       class << self
         def me
@@ -27,11 +27,6 @@ module BrighterPlanet
         !!@local
       end
       
-      attr_writer :hostname
-      def hostname
-        @hostname || lookup(:hostname) || local_hostname
-      end
-
       # can't be saved
       attr_writer :rails_root
       def rails_root
@@ -50,14 +45,20 @@ module BrighterPlanet
         @private_dir || ::File.join(rails_root, 'config')
       end
 
+      # can't be saved
+      attr_writer :status
+      def status
+        @status || (color == service_class.color ? :active : :standby)
+      end
+
       attr_writer :environment
       def environment
         @environment || lookup(:environment) || local_rails_environment
       end
-
-      attr_writer :status
-      def status
-        @status || lookup(:status) || (gender == service_class.gender ? :active : :standby)
+      
+      attr_writer :hostname
+      def hostname
+        @hostname || lookup(:hostname) || local_hostname
       end
 
       def service_class

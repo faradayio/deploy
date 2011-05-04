@@ -4,6 +4,17 @@ module BrighterPlanet
       include ::Singleton
       include ReadsFromPublicUrl
       
+      WANTS = [
+        :resque_redis_url,
+        :incoming_queue,
+        :color,
+        :role,
+        :environment,
+        :server,
+        :log_dir,
+        :phase
+      ]
+      
       def endpoint
         'http://carbon.brighterplanet.com'
       end
