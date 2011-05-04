@@ -22,5 +22,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit'
   s.add_development_dependency 'fakeweb'
   s.add_development_dependency 'fakefs'
+  s.add_development_dependency 'net-dns'
+  s.add_development_dependency 'activesupport'
+  s.add_development_dependency 'i18n'
   s.add_dependency 'eat'
 end

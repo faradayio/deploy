@@ -11,6 +11,7 @@ module BrighterPlanet
     
     autoload :Server, 'brighter_planet_deploy/server'
     autoload :EmissionEstimateService, 'brighter_planet_deploy/emission_estimate_service'
+    autoload :AuthoritativeDnsResolver, 'brighter_planet_deploy/authoritative_dns_resolver'
     
     # mixins
     autoload :ReadsFromLocalFilesystem, 'brighter_planet_deploy/reads_from_local_filesystem'

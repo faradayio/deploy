@@ -19,8 +19,8 @@ class TestCm1 < Test::Unit::TestCase
     FileUtils.mkdir_p '/data/randomeyappname/current/public/brighter_planet_deploy'
     File.open('/data/randomeyappname/current/public/brighter_planet_deploy/color', 'w') { |f| f.write 'blue' }
     
+    Rails.root = '/data/randomeyappname/current'
     @me = BrighterPlanet.deploy.servers.me
-    @me.rails_root = '/data/randomeyappname/current'
   end
   
   def teardown
@@ -59,7 +59,6 @@ class TestCm1 < Test::Unit::TestCase
     @me.resque_redis_url = 'fie[COLOR]bang'
     @me.save_config
     me2 = BrighterPlanet.deploy.servers.me
-    me2.rails_root = '/data/randomeyappname/current'
     assert_equal '-zzz-', me2.color
     assert_equal 'fie-zzz-bang', me2.resque_redis_url
   end
@@ -67,5 +66,15 @@ class TestCm1 < Test::Unit::TestCase
   # not sure this should be included
   def test_008_phase
     assert_equal 'edge', @me.phase
+  end
+  
+  def test_009_color_from_cm1_itself
+    FakeFS.deactivate!
+    Rails.root = File.expand_path("../tmp", __FILE__)
+    @me.service = 'EmissionEstimateService'
+    @me.save_config
+    assert_equal 'red', BrighterPlanet.deploy.emission_estimate_service.color
+  ensure
+    FileUtils.rm_rf File.expand_path("../tmp", __FILE__)
   end
 end
