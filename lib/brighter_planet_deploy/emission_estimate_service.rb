@@ -10,9 +10,10 @@ module BrighterPlanet
         :color,
         :role,
         :environment,
-        :server,
         :log_dir,
-        :phase
+        :phase,
+        :carrier, # amazon
+        :ey_app,  # cm1_edge_blue
       ]
       
       def endpoint
