@@ -11,9 +11,13 @@ module BrighterPlanet
       def name
         'EmissionEstimateService'
       end
-      
-      def gender
-        from_public_url(:gender).to_sym
+            
+      def method_missing(method_id, *args)
+        if args.length == 0 and not block_given?
+          from_public_url method_id
+        else
+          super
+        end
       end
     end
   end

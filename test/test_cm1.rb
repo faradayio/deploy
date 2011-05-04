@@ -30,8 +30,8 @@ class TestCm1 < Test::Unit::TestCase
   end
   
   def test_001_gender
-    assert_equal :girl, @me.gender
-    assert_equal :girl, BrighterPlanet.deploy.emission_estimate_service.gender
+    assert_equal 'girl', @me.gender
+    assert_equal 'girl', BrighterPlanet.deploy.emission_estimate_service.gender
   end
     
   def test_003_service
@@ -50,22 +50,22 @@ class TestCm1 < Test::Unit::TestCase
   
   def test_006_write_config
     @me.write_config :public => { :gender => '-bar-' }, :private => { :resque_redis_url => 'foo[GENDER]baz' }
-    assert_equal :'-bar-', @me.gender
+    assert_equal '-bar-', @me.gender
     assert_equal 'foo-bar-baz', @me.resque_redis_url
   end
   
   def test_007_save_config
-    @me.gender = :'-zzz-'
+    @me.gender = '-zzz-'
     @me.resque_redis_url = 'fie[GENDER]bang'
     @me.save_config
     me2 = BrighterPlanet.deploy.servers.me
     me2.rails_root = '/data/randomeyappname/current'
-    assert_equal :'-zzz-', me2.gender
+    assert_equal '-zzz-', me2.gender
     assert_equal 'fie-zzz-bang', me2.resque_redis_url
   end
     
   # not sure this should be included
   def test_008_phase
-    assert_equal :edge, @me.phase
+    assert_equal 'edge', @me.phase
   end
 end
