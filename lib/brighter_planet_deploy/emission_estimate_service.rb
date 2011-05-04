@@ -14,6 +14,7 @@ module BrighterPlanet
         :phase,
         :carrier, # amazon
         :ey_app,  # cm1_edge_blue
+        :service
       ]
       
       def endpoint
