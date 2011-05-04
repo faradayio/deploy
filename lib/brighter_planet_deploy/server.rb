@@ -8,6 +8,8 @@ module BrighterPlanet
       
       # keys that are published
       PUBLIC = [:gender]
+      # keys that are not saved
+      NOT_SAVED = [:local, :rails_root, :public_dir, :private_dir]
 
       class << self
         def me
@@ -77,6 +79,10 @@ module BrighterPlanet
 
       def public?(k)
         PUBLIC.include? k.to_sym
+      end
+      
+      def not_saved?(k)
+        NOT_SAVED.include? k.to_sym
       end
 
       private

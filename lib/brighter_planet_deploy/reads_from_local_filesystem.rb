@@ -27,8 +27,9 @@ module BrighterPlanet
         public = {}
         private = {}
         instance_variables.each do |k|
+          k1 = k.to_s.sub('@', '').to_sym
+          next if not_saved? k1
           if v = instance_variable_get(k)
-            k1 = k.to_s.sub('@', '').to_sym
             if public? k1
               public[k1] = v
             else
