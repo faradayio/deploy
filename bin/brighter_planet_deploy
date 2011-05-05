@@ -4,6 +4,7 @@ unless RUBY_VERSION >= '1.9'
   require 'rubygems'
 end
 require 'brighter_planet_deploy'
+require 'thor'
 
 module BrighterPlanet
   class Deploy
