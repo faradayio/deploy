@@ -13,7 +13,7 @@ module BrighterPlanet
 
       class << self
         def me
-          new :local => true
+          @me ||= new :local => true
         end
       end
 

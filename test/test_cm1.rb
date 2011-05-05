@@ -77,4 +77,8 @@ class TestCm1 < Test::Unit::TestCase
   ensure
     FileUtils.rm_rf File.expand_path("../tmp", __FILE__)
   end
+  
+  def test_010_sticky_me
+    assert_equal BrighterPlanet.deploy.servers.me.object_id, BrighterPlanet.deploy.servers.me.object_id
+  end
 end
