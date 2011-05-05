@@ -13,7 +13,7 @@ module BrighterPlanet
         from_file public_brighter_planet_deploy_path(k)
       end
       
-      def write_config(config = {})
+      def write(config = {})
         [ :public, :private ].each do |loc|
           config[loc].each do |k, v|
             path = send("#{loc}_brighter_planet_deploy_path", k)
@@ -23,7 +23,7 @@ module BrighterPlanet
         end
       end
       
-      def save_config
+      def save
         public = {}
         private = {}
         instance_variables.each do |k|
@@ -37,7 +37,7 @@ module BrighterPlanet
             end
           end
         end
-        write_config :public => public, :private => private
+        write :public => public, :private => private
       end
       
       private

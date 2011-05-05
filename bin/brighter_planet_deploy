@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+unless RUBY_VERSION >= '1.9'
+  require 'rubygems'
+end
+require 'brighter_planet_deploy'
+
+module BrighterPlanet
+  class Deploy
+    class CLI < ::Thor
+      desc 'write', 'takes a bunch of config options and saves them with brighter_planet_deploy'
+      method_option :rails_root, :type => :string, :default => ::Dir.pwd
+      method_option :resque_redis_url, :type => :string
+      method_option :incoming_queue, :type => :string
+      method_option :color, :type => :string
+      method_option :role, :type => :string
+      method_option :environment, :type => :string
+      method_option :log_dir, :type => :string
+      method_option :phase, :type => :string
+      method_option :carrier, :type => :string
+      method_option :ey_app, :type => :string
+      method_option :service, :type => :string
+      def write
+        me = ::BrighterPlanet.deploy.servers.me
+        me.rails_root = options[:rails_root]
+        options.each do |k, v|
+          me.send("#{k}=", v)
+        end
+        me.save
+      end
+    end
+  end
+end
+
+BrighterPlanet::Deploy::CLI.start

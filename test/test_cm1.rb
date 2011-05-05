@@ -48,16 +48,16 @@ class TestCm1 < Test::Unit::TestCase
     assert @me.resque_redis_url.include?('active')
   end
   
-  def test_006_write_config
-    @me.write_config :public => { :color => '-bar-' }, :private => { :resque_redis_url => 'foo[COLOR]baz' }
+  def test_006_write
+    @me.write :public => { :color => '-bar-' }, :private => { :resque_redis_url => 'foo[COLOR]baz' }
     assert_equal '-bar-', @me.color
     assert_equal 'foo-bar-baz', @me.resque_redis_url
   end
   
-  def test_007_save_config
+  def test_007_save
     @me.color = '-zzz-'
     @me.resque_redis_url = 'fie[COLOR]bang'
-    @me.save_config
+    @me.save
     me2 = BrighterPlanet.deploy.servers.me
     assert_equal '-zzz-', me2.color
     assert_equal 'fie-zzz-bang', me2.resque_redis_url
@@ -72,7 +72,7 @@ class TestCm1 < Test::Unit::TestCase
     FakeFS.deactivate!
     Rails.root = File.expand_path("../tmp", __FILE__)
     @me.service = 'EmissionEstimateService'
-    @me.save_config
+    @me.save
     assert_equal 'red', BrighterPlanet.deploy.emission_estimate_service.color
   ensure
     FileUtils.rm_rf File.expand_path("../tmp", __FILE__)
