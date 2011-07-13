@@ -4,7 +4,7 @@ module BrighterPlanet
     class AuthoritativeDnsResolver
       # sabshere 5/4/11 last updated
       NAMESERVERS = {
-        'ns1.easydns.com' => '66.225.199.10',
+        'ns1.easydns.com' => '64.68.192.10',
         'ns2.easydns.com' => '72.52.2.1',
       }
       
