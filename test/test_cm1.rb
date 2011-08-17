@@ -35,8 +35,8 @@ class TestCm1 < Test::Unit::TestCase
   end
     
   def test_003_service
-    assert_equal 'Cm1', BrighterPlanet.deploy.cm1.class.to_s.demodulize
-    assert_equal 'Cm1', @me.service_singleton.class.to_s.demodulize
+    assert_equal 'Cm1', BrighterPlanet.deploy.cm1.service
+    assert_equal 'Cm1', @me.service_model.service
   end
   
   def test_004_status

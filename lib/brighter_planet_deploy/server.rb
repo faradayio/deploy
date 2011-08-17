@@ -48,7 +48,7 @@ module BrighterPlanet
       # can't be saved
       attr_writer :status
       def status
-        @status || (color == service_singleton.color ? :active : :standby)
+        @status || (color == service_model.color ? :active : :standby)
       end
 
       attr_writer :environment
@@ -61,7 +61,7 @@ module BrighterPlanet
         @hostname || lookup(:hostname) || local_hostname
       end
 
-      def service_singleton
+      def service_model
         case service.to_s.underscore
         when 'cm1'
           Cm1.instance

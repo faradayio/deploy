@@ -19,6 +19,10 @@ module BrighterPlanet
         :service
       ]
 
+      def service
+        self.class.to_s.demodulize
+      end
+
       def domain
         'carbon.brighterplanet.com'
       end
