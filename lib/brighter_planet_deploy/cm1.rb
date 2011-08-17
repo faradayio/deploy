@@ -1,6 +1,6 @@
 module BrighterPlanet
   class Deploy
-    class EmissionEstimateService
+    class Cm1
       include ::Singleton
       include ReadsFromPublicUrl
 
@@ -27,12 +27,8 @@ module BrighterPlanet
         "http://#{domain}"
       end
 
-      def name
-        'EmissionEstimateService'
-      end
-      
       def color
-        if Deploy.instance.servers.me.service == 'EmissionEstimateService'
+        if Deploy.instance.servers.me.service.to_s.underscore == 'cm1'
           (AuthoritativeDnsResolver.getaddress(domain) == RED_IP) ? 'red' : 'blue'
         else
           from_public_url :color

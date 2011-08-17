@@ -10,7 +10,7 @@ module BrighterPlanet
     include ::Singleton
     
     autoload :Server, 'brighter_planet_deploy/server'
-    autoload :EmissionEstimateService, 'brighter_planet_deploy/emission_estimate_service'
+    autoload :Cm1, 'brighter_planet_deploy/cm1'
     autoload :AuthoritativeDnsResolver, 'brighter_planet_deploy/authoritative_dns_resolver'
     
     # mixins
@@ -21,8 +21,8 @@ module BrighterPlanet
       Server
     end
     
-    def emission_estimate_service
-      EmissionEstimateService.instance
+    def cm1
+      Cm1.instance
     end
   end
 end

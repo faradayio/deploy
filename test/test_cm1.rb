@@ -31,12 +31,12 @@ class TestCm1 < Test::Unit::TestCase
   
   def test_001_color
     assert_equal 'blue', @me.color
-    assert_equal 'blue', BrighterPlanet.deploy.emission_estimate_service.color
+    assert_equal 'blue', BrighterPlanet.deploy.cm1.color
   end
     
   def test_003_service
-    assert_equal 'EmissionEstimateService', BrighterPlanet.deploy.emission_estimate_service.name
-    assert_equal 'EmissionEstimateService', @me.service_class.name
+    assert_equal 'Cm1', BrighterPlanet.deploy.cm1.class.to_s.demodulize
+    assert_equal 'Cm1', @me.service_singleton.class.to_s.demodulize
   end
   
   def test_004_status
@@ -71,9 +71,9 @@ class TestCm1 < Test::Unit::TestCase
   def test_009_color_from_cm1_itself
     FakeFS.deactivate!
     Rails.root = File.expand_path("../tmp", __FILE__)
-    @me.service = 'EmissionEstimateService'
+    @me.service = 'Cm1'
     @me.save
-    assert_equal 'red', BrighterPlanet.deploy.emission_estimate_service.color
+    assert_equal 'red', BrighterPlanet.deploy.cm1.color
   ensure
     FileUtils.rm_rf File.expand_path("../tmp", __FILE__)
   end
